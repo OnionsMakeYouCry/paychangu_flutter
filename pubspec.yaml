@@ -1,6 +1,6 @@
 name: paychangu_flutter
 description: "A Flutter SDK for integrating PayChangu payment gateway. Supports mobile money, card payments, and other payment methods in Malawi."
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/paychangu/paychangu-flutter
 
 environment:

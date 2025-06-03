@@ -28,7 +28,7 @@ class PayChangu {
         body: jsonEncode(request.toJson()),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonDecode(response.body);
       } else {
         throw PayChanguException(
@@ -68,7 +68,7 @@ class PayChangu {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final jsonResponse = jsonDecode(response.body);
         return PaymentVerificationResponse.fromJson(jsonResponse);
       } else {
@@ -83,22 +83,23 @@ class PayChangu {
   }
 
   /// Validates payment verification response
-  bool validatePayment(PaymentVerificationResponse verification, {
+  bool validatePayment(
+    PaymentVerificationResponse verification, {
     required String expectedTxRef,
     required String expectedCurrency,
     required int expectedAmount,
   }) {
     final data = verification.data;
-    
+
     return data.status == 'success' &&
-           data.txRef == expectedTxRef &&
-           data.currency == expectedCurrency &&
-           data.amount >= expectedAmount;
+        data.txRef == expectedTxRef &&
+        data.currency == expectedCurrency &&
+        data.amount >= expectedAmount;
   }
 
   /// Initiates a mobile money transfer
   Future<MobileMoneyTransferResponse> initiateMobileMoneyTransfer(
-    MobileMoneyTransferRequest request
+    MobileMoneyTransferRequest request,
   ) async {
     try {
       final response = await http.post(
@@ -111,7 +112,7 @@ class PayChangu {
         body: jsonEncode(request.toJson()),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final jsonResponse = jsonDecode(response.body);
         return MobileMoneyTransferResponse.fromJson(jsonResponse);
       } else {
@@ -126,7 +127,9 @@ class PayChangu {
   }
 
   /// Fetch transfer status
-  Future<MobileMoneyTransferResponse> getTransferStatus(String reference) async {
+  Future<MobileMoneyTransferResponse> getTransferStatus(
+    String reference,
+  ) async {
     try {
       final response = await http.get(
         Uri.parse('$_baseUrl/mobile-money/payouts/$reference'),
@@ -136,7 +139,7 @@ class PayChangu {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final jsonResponse = jsonDecode(response.body);
         return MobileMoneyTransferResponse.fromJson(jsonResponse);
       } else {
@@ -149,4 +152,4 @@ class PayChangu {
       throw PayChanguException('Failed to fetch transfer status', e.toString());
     }
   }
-} 
+}
