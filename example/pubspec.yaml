@@ -1,0 +1,22 @@
+name: paychangu_flutter_example
+description: Minimal example for the paychangu_flutter package.
+publish_to: none
+version: 1.1.0+1
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  paychangu_flutter:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

@@ -1,4 +1,11 @@
 include: package:flutter_lints/flutter.yaml
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+analyzer:
+  exclude:
+    - build/**
+    - example/build/**
+
+linter:
+  rules:
+    # Currency ISO codes (MWK, USD) are intentional public API names.
+    constant_identifier_names: false
